@@ -23,7 +23,7 @@ const postId = parseInt(route.params.id as string) - 1;
 const post = ref(posts.value[postId]);
 
 // 포스트가 없으면 예외처리로 홈으로 보냄
-if (!post.value) router.push("/");
+if (!post.value) router.push("");
 </script>
 <style lang="scss" scoped>
 .post-contents {
