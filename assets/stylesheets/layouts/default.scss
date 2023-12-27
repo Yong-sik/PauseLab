@@ -9,12 +9,12 @@
 }
 
 .icon-1 {
-  transform: translateY(-8px);
+  transform: translateY(-1dvh);
   animation-delay: 100ms;
 }
 
 .icon-3 {
-  transform: translateY(8px);
+  transform: translateY(1dvh);
   animation-delay: 250ms;
 }
 
@@ -50,10 +50,10 @@
 
 .icon-1.a {
 
-  transform: translateY(0.27em) rotate(40deg);
+  transform: translateY(0dvw) rotate(45deg);
 }
 .icon-3.b {
-  transform: translateY(-0.27em) rotate(-40deg);
+  transform: translateY(0dvh) rotate(-45deg);
 }
 .icon-2.c {
   opacity: 0;

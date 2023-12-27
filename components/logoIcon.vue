@@ -1,0 +1,3 @@
+<template>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.18 40.74"><defs><component is="style" scoped>.cls-1{fill:#fff;}</component></defs><g id="레이어_2" data-name="레이어 2"><g id="Layer_1" data-name="Layer 1"><path class="cls-1" d="M7.8,0H0V25.62A19.3,19.3,0,0,0,2.16,35a15.56,15.56,0,0,0,6.13,5.77V0Z"/><path class="cls-1" d="M20.38,0h7.8V25.62A19.3,19.3,0,0,1,26,35a15.63,15.63,0,0,1-6.13,5.77V0Z"/></g></g></svg>
+</template>
