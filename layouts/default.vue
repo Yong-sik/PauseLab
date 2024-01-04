@@ -3,59 +3,62 @@
 <template>
   <v-app>
     <v-toolbar class="bg-header_background text-guide_font">
-      <v-overlay
-        :absolute=true
-        :model-value = overlay
-        persistent
-        activator=".hamburger-btn"
-        class="align-center justify-center"
-        location-strategy="static"
-        scroll-strategy="reposition"
-      >
+      <div >
+        <v-overlay
+          attach=".v-toobar"
+          :model-value = overlay
+          persistent
+          activator=".hamburger-btn"
+          class="align-center justify-center"
+          id="overlay"
+          location-strategy="static"
+          scroll-strategy="reposition"
+        >
 
-        <div style="position: relative;">
-          <div class="shine-logo" @click="routePage('')">
-            <v-btn>
-              <v-icon icon="custom:shineLogoIcon"></v-icon>
-            </v-btn>
+          <div style="position: relative;">
+            <div class="shine-logo" @click="routePage('/')">
+              <v-btn>
+                <v-icon icon="custom:shineLogoIcon"></v-icon>
+              </v-btn>
+            </div>
+
+            
+            <v-row>
+              <v-col class="header-col" cols="12" md="6" align="center" @click="routePage('FILM')">
+                <v-sheet class = "font-weight-black text-guide_font">
+                  FILM
+                </v-sheet>
+              </v-col>
+
+              <v-col class="header-col" cols="12" md="6" align="center" @click="routePage('POST')">
+                <v-sheet class = "font-weight-black text-guide_font">
+                  POST
+                </v-sheet>
+              </v-col>
+            </v-row>
+            
+            <v-row>
+              <v-col class="header-col" cols="12" md="6" align="center" @click="routePage('ABOUT')">
+                <v-sheet 
+                  class = "font-weight-black text-guide_font"
+                >
+                  ABOUT
+                </v-sheet>
+              </v-col>
+
+              <v-col class="header-col" cols="12" md="6" align="center" @click="routePage('CONTACT')">
+                <v-sheet class = "font-weight-black text-guide_font">
+                  CONTACT
+                </v-sheet>
+              </v-col>
+            </v-row>
           </div>
-
-          
-          <v-row>
-            <v-col class="header-col" cols="12" md="6" align="center" @click="routePage('FILMS')">
-              <v-sheet class = "font-weight-black text-guide_font">
-                FILM
-              </v-sheet>
-            </v-col>
-
-            <v-col class="header-col" cols="12" md="6" align="center" @click="routePage('POSTS')">
-              <v-sheet class = "font-weight-black text-guide_font">
-                POST
-              </v-sheet>
-            </v-col>
-          </v-row>
-          
-          <v-row>
-            <v-col class="header-col" cols="12" md="6" align="center" @click="routePage('ABOUT')">
-              <v-sheet 
-                class = "font-weight-black text-guide_font"
-              >
-                ABOUT
-              </v-sheet>
-            </v-col>
-
-            <v-col class="header-col" cols="12" md="6" align="center" @click="routePage('CONTACT')">
-              <v-sheet class = "font-weight-black text-guide_font">
-                CONTACT
-              </v-sheet>
-            </v-col>
-          </v-row>
-        </div>
-      </v-overlay>
+        </v-overlay>
+      </div>
       
       <!-- <v-app-bar-nav-icon size="" color="main_font"></v-app-bar-nav-icon> -->
       <!-- <div class="logo"> -->
-        <v-btn class="logo">
+        <v-btn class="logo" @click="routePage('/')">
           <v-icon size="32" icon="custom:logoIcon"></v-icon>
         </v-btn>
       <!-- </div> -->
@@ -63,7 +66,12 @@
       <v-spacer></v-spacer>
 
       <v-toolbar-title class="font-weight-black text-uppercase grey--text " >
-        Pause Lab
+        <!-- {{$route.name}} -->
+        <span id="headerTitle">Pause Lab</span>
+        <!-- <span v-if = "$route.params.id==='post'">Pause Lab</span>
+        <span v-else>{{$route.name}}</span> -->
+        
+        
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
@@ -77,7 +85,7 @@
         </div>
       </v-btn> -->
       
-      <input type="checkbox" role="button" aria-label="Display the menu" class="hamburger-btn" disabled="true" @click="toggle">
+      <input type="checkbox" id="hamburger-btn" role="button" aria-label="Display the menu" class="hamburger-btn" disabled="false">
       
     </v-toolbar>
     <router-view />
@@ -91,12 +99,44 @@
 </template>
 
 <script setup lang="ts">
-
+  let overlay = toRef(false);
+  
+  
+  // const toggle = () => {
+  //     overlay = ref(true);
+  //     overlay.value = !overlay.value;
+  //   }
+ 
   function routePage( pageName : string){
-    // overlay.value = false;
     const router = useRouter();
-    const relativeAddress = "/" + pageName;
-    router.push({ path: relativeAddress }); // url을 그대로 넣어도 됨
+    
+    console.log("useRouter.getRoute: ", router.getRoutes());
+   
+    console.log("pageName: ", pageName);
+    // const relativeAddress = pageName;
+    router.push({ 
+      path: pageName,
+    }); // 상대 경로, 절대 경로 상관없음.
+    const headerTitle = document.getElementById("headerTitle");
+    if(headerTitle != null){
+      console.log("!!!!");
+      if(pageName === '/'){
+        pageName = "Pause Lab";
+        console.log('pageName: ', pageName);
+      }
+      headerTitle.innerHTML = pageName;
+    }
+    // console.log("headerTitle: ", headerTitle);
+    let hamburgerButton = document.getElementById("hamburger-btn");
+    
+    if(hamburgerButton != null){
+      let overlayID = document.getElementById("overlay");
+      console.log("overlayID: ", overlayID);
+      if(overlayID != null){
+        hamburgerButton.click();
+      }
+    }
+    
   }
   // import { computed } from 'vue'
 
@@ -109,15 +149,9 @@
   //   icon1?.classList.toggle('a');
   //   icon2?.classList.toggle('c');
   //   icon3?.classList.toggle('b');
-  // }
-  
-  let overlay = ref(false);
-    
+  // }  
 
-  const toggle = () => {
-    overlay = ref(true);
-    overlay.value = !overlay.value;
-  }
+  
   
   onMounted(() => {
     // 햄버거 버튼 애니메이션이 css에서 이뤄진다. 
@@ -129,6 +163,7 @@
     if( hamburgerButton != null){
       hamburgerButton.removeAttribute('disabled');
     }
+    console.log("mounted");
   })
   // function toggleBurgerButton(){
     
@@ -170,6 +205,13 @@
   // })
 </script>
 <style lang="scss" scoped>
+
+  .v-toolbar{
+    border-bottom: 2px solid #282828;
+    z-index:1000;
+  }
+
+  @import "../assets/stylesheets/layouts/default.scss";
   .v-toolbar-title{
     margin-inline-start: 0px;
     font-size: 1.4dvw;
@@ -226,6 +268,10 @@
       display: none;
     }
 
+    .v-sheet{
+      font-size: 4dvw;
+    }
+
     // .v-toolbar-title{
     //   width: 3dvw;
     //   height: 3dvh;
@@ -240,6 +286,23 @@
       width: 600px;
       font-size: 2.5dvw;
       text-align: center;
+    }
+
+    .v-sheet{
+      font-size: 8dvw;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    // .header-col{
+    //   // width: 30%;
+    //   font-size: 20dvw;
+    //   cursor: pointer;
+    //   // heig
+    // }
+
+    .v-sheet{
+      font-size: 10dvw;
     }
   }
 

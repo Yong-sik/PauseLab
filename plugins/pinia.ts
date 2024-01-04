@@ -19,6 +19,7 @@ export default defineNuxtPlugin(({ $pinia }: any) => {
   $pinia.use(({ store }: PiniaPlugin & { store: any }) => {
 		// 라우터를 피냐의 플러그인으로 넣음(정해진 문법이니 따라 작성해주세요)
     const router = useRouter();
+
     store.router = markRaw(router);
   });
 	// 피냐에 플러그인 등록해줌
