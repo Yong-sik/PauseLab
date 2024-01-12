@@ -1,67 +1,50 @@
 import type { Content } from "@/types/stores/contentListStore";
+import axios from "axios";
 
-export default defineStore("content", {
-    // state: 변수입니다. 반응성을 가지며 actions로 변경하거나 pinia에 바로 접근해서 변경할 수 있습니다.
-  state: () => ({
-    contents: [
-      {
-        id: 0,
-        imgUri: "_nuxt/assets/images/1.jpg",
-        title: "첫번째 게시글!",
-        contents: "첫번째 게시글 내용!",
-      },
-      {
-        id: 1,
-        imgUri: "../assets/images/2.jpg",
-        title: "세상에서 제일 귀여운 고양이",
-        contents: "구라얌",
-      },
-      {
-        id: 2,
-        imgUri: "../assets/images/2.jpg",
-        title: "세상에서 제일 귀여운 고양이",
-        contents: "구라얌",
-      },
-      {
-        id: 3,
-        imgUri: "../assets/images/2.jpg",
-        title: "세상에서 제일 귀여운 고양이",
-        contents: "구라얌",
-      },
-      {
-        id: 4,
-        imgUri: "../assets/images/2.jpg",
-        title: "세상에서 제일 귀여운 고양이",
-        contents: "구라얌",
-      },
-      {
-        id: 5,
-        imgUri: "../assets/images/2.jpg",
-        title: "세상에서 제일 귀여운 고양이",
-        contents: "구라얌",
-      },
-      {
-        id: 6,
-        imgUri: "../assets/images/2.jpg",
-        title: "세상에서 제일 귀여운 고양이",
-        contents: "구라얌",
-      },
+export default defineStore("content", () => {
+  const filmsState = ref([] as Content[]);
+  const postsState = ref<Content[]>([]);
 
-    ] as Content[],
-  }),
-  // getters: vue의 computed와 비슷합니다. 함수를 미리 계산해 변수에 저장하는 형태로 연산 횟수를 줄이고 더 편하게 사용할 수 있습니다.
-  getters: {
-    // 포스트가 존재하면 첫번째 포스트 가져옴
-    firstPost: (state): Content | boolean => {
-      if (state.contents.length) return state.contents[0];
-      else return false;
-    },
-  },
-  // actions: state를 변경하기 전에 하고 싶은 로직을 넣습니다. this(store)에 접근할 수 있습니다.
-  actions: {
-    // Posts 할당
-    setContents(contents: Content[]) {
-      this.contents = contents;
-    },
-  },
+  function setState(){
+      filmsState.value[0].id = 123456;
+  }
+  function getIdList( size:number ){ 
+    let idList = [];
+    console.log(filmsState.value[0].id);
+    for(let i=0; i<size; i++){
+      console.log("filmsState.value");
+      console.log(filmsState.value[i]);
+      idList[i] = filmsState.value[i].id;
+      console.log("idList");
+      console.log(idList[i]);
+    }
+    return idList;
+  }
+
+  // onMounted( async () => {
+  //   await fetchContents('films');
+  //   await fetchContents('posts');
+  //   // getIdList(7);
+  // });
+
+  async function fetchContents( contentCategory :string) {
+    try{
+      const { data, status } = await axios.get(contentCategory); // 구조분해할당
+      
+      if(contentCategory === 'films'){
+        filmsState.value = data;
+      }
+      else if (contentCategory === 'posts'){
+        postsState.value = data;
+      }
+      if(status === 200){
+        console.log('Success Message');
+      }
+    } catch (err) {
+      console.error('Fetch ERROR!', err);
+    }
+  }
+
+  return { fetchContents, filmsState, postsState, getIdList }
+  
 });

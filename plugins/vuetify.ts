@@ -18,7 +18,7 @@ export default defineNuxtPlugin((app) => {
       defaultTheme: 'pauseLabTheme',
       themes:{
         pauseLabTheme: {
-          dark: false,
+          // dark: false,
           colors: {
             background: '#282828',
             header_background: '#000000',

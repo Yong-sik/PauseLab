@@ -13,6 +13,8 @@ function MyPiniaPlugin({ store }: PiniaPluginContext) {
   return { creationTime: new Date() };
 }
 
+
+
 // plugins 폴더에선 defineNuxtPlugin 함수를 사용해 플러그인을 등록합니다.
 export default defineNuxtPlugin(({ $pinia }: any) => {
 

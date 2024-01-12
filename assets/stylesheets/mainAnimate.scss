@@ -1,0 +1,18 @@
+@keyframes bubble {
+    0% {
+      // display: none;
+    //   padding-top: 120%;
+      transform: translateY(120%);
+      // background-color: #585858;
+      opacity: 0;
+    }
+
+    100% {
+      // display: block;
+    //   padding-top: 0;
+      transform: translateY(0);
+      // background-color: #282828;
+      opacity: 1;
+      
+    }
+  }

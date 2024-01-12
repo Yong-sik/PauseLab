@@ -2,10 +2,41 @@
 
 <template>
   <v-app>
-    <v-toolbar class="bg-header_background text-guide_font">
+    <!-- <v-card-text style="   height: 100%; width: 100%; position: fixed"> -->
+      <div style="display: block; position: fixed; right: 30px; bottom: 50px; z-index: 9999;">
+        
+        <v-btn 
+          class="tooltip" 
+          min-width="0" 
+          size="50"
+          style=" margin: auto; display: block; border-radius: 100%;"
+          @click="connectLink('kakao')"
+        >
+          <v-icon size="25" icon="custom:kakaoIcon"></v-icon>
+          <span class="tooltiptext tooltip-left">
+            <div id="phone-number-wrap" color="#424242" align="center" elevation="0" >
+              <div class="pt-2 pb-2" style="width: 80%; word-wrap: break-word; white-space: normal;">
+                무엇이든 문의주세요.
+              </div>
+            </div>
+          </span>
+        </v-btn>
+        <v-btn 
+          min-width="0"
+          size="50"
+          @click = "scrollTop"
+          class="mt-4"
+          style="margin: auto; display: block; border-radius: 100%;"
+          color="#424242"
+        >
+          <v-icon size="40">mdi-chevron-up</v-icon>
+        </v-btn>
+      </div>
+  <!-- </v-card-text> -->
+    <v-toolbar class="text-guide_font">
       <div >
         <v-overlay
-          attach=".v-toobar"
+          attach=".v-toolbar"
           :model-value = overlay
           persistent
           activator=".hamburger-btn"
@@ -88,19 +119,31 @@
       <input type="checkbox" id="hamburger-btn" role="button" aria-label="Display the menu" class="hamburger-btn" disabled="false">
       
     </v-toolbar>
-    <router-view />
+    
+    <router-view class="router-view"></router-view>
+
+    
     <!-- <NuxtLink to="/">home</NuxtLink>
     <NuxtLink to="/posts">posts</NuxtLink>
     <NuxtLink to="/profile">profile</NuxtLink>
     <NuxtLink to="/login">login</NuxtLink> -->
   </v-app>
-  <slot />
-  <div>footer</div>
+  
+  <!-- <div>footer</div> -->
 </template>
 
 <script setup lang="ts">
+
+  const { connectLink } = useUtilFunction();
+
   let overlay = toRef(false);
   
+  function scrollTop(){
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
   
   // const toggle = () => {
   //     overlay = ref(true);
@@ -205,9 +248,15 @@
   // })
 </script>
 <style lang="scss" scoped>
+  @import "../assets/stylesheets/tooltip.scss";
 
+  .router-view{
+    margin-top: 64px;
+  }
   .v-toolbar{
     border-bottom: 2px solid #282828;
+    position: fixed;
+    background: rgba(0, 0, 0, .7);
     z-index:1000;
   }
 
@@ -228,6 +277,9 @@
     padding-bottom: 6dvw;
     cursor: pointer;
     // heig
+  }
+  .v-btn:hover :deep(.v-btn__overlay){
+      opacity: 0;
   }
   // Vuetify 내부에서 생성되는 태그에 접근하고 싶으면 개발자 도구에서 태그명 확인 후 아래처럼 접근 가능.
   :deep(.v-overlay__content){
@@ -310,4 +362,35 @@
     text-decoration: none;
   }
 
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    background-color: #FEE500;
+    position: absolute;
+    transform: translateY(10%);
+    z-index: 1;
+    color: #424242;
+    font-weight: 900;
+    width: 240px;
+    
+  }
+
+  
+
+  .tooltip{
+    background-color: #424242;
+  }
+  .tooltip:hover{
+    transition: none;
+    background-color: #FEE500;
+  }
+
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    transition: all .3s ease-out;
+  }
+  @media screen and (max-width: 430px) {
+    .tooltip .tooltip-left {
+      display: none;
+    }
+  }
 </style>

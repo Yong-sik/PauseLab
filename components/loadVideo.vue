@@ -32,13 +32,8 @@
         position: relative;
         /* No clicking/hover effects */
         pointer-events: none;
-
         padding-top: 56.25%;
-        // padding-bottom: 30px;
-        // width: 100%;
         height: 0;
-        // overflow: hidden;
-        // background-color: #282828;
         z-index: 900;
     }
     /* iframe */

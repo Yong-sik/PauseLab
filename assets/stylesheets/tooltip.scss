@@ -1,0 +1,98 @@
+.contact-tooltip {
+    animation: hithere 1s ease infinite;
+    width: 300px;
+    word-wrap: break-word;
+    cursor: pointer;
+  }
+  @keyframes hithere {
+    30% { transform: scale(1.1); }
+    40%, 60% { transform: rotate(-2deg) scale(1.1); }
+    50% { transform: rotate(2deg) scale(1.1); }
+    70% { transform: rotate(0deg) scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  .tooltip {
+    position: relative;
+    display: block;
+  }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 300px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+  
+    position: absolute;
+    z-index: 1;
+  }
+  
+//   .tooltip:focus .tooltiptext {
+//     visibility: visible;
+//   }
+  
+  /* 툴팁 기본 스타일 설정 끝 */
+  
+  /* -------------------------- */
+  
+  /* 툴팁 화살표 기본 스타일 설정 시작 */
+  
+  .tooltip .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    border-style: solid;
+    border-width: 5px;
+  }
+  
+  /* 툴팁 화살표 기본 스타일 설정 끝 */
+  
+  /* 툴팁 방향 설정 시작 */
+  
+  /* 위쪽 툴팁 시작 */
+  
+  .tooltip .tooltip-top {
+    width: 300px;
+    bottom: 150%;
+    background-color: #424242;
+    // padding: 20px;
+    // left: 50%;
+    // margin-left: -60px;
+  }
+  
+  .tooltip .tooltip-top::after {
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-color: #424242 transparent transparent transparent;
+  }
+
+  /* 왼쪽 툴팁 시작 */
+
+.tooltip .tooltip-left {
+    top: -5px;
+    right: 120%;
+  }
+  
+  .tooltip .tooltip-left::after {
+    top: 50%;
+    left: 100%;
+    margin-top: -5px;
+    border-color: transparent transparent transparent #FEE500;
+  }
+  
+  /* 왼쪽 툴팁 끝 */
+
+  @media screen and (max-width: 430px) {
+
+    .tooltip .tooltip-top {
+      width: 300px;
+      bottom: 150%;
+      background-color: #424242;
+      // padding: 20px;
+      // left: 50%;
+      // margin-left: -60px;
+    }
+  }  
