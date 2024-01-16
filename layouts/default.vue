@@ -133,7 +133,6 @@
 </template>
 
 <script setup lang="ts">
-
   const { connectLink } = useUtilFunction();
 
   let overlay = toRef(false);

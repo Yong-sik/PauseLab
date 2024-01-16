@@ -1,13 +1,35 @@
 <template>
-  <div>
-    <h1>Film Page</h1>
-  </div>
+  <!-- <div class="posts">
+    <h1>Posts Page</h1>
+    <template v-for="post in postsState">
+      <div class="post" @click="$router.push(`/post/${post.id}`)">
+        <h3>{{ post.id }}</h3>
+        <h3>{{ post.title }}</h3>
+      </div>
+    </template>
+  </div> -->
+  <ContentList
+      :contentCategory="`film`"
+      :isRequireMore="false"
+      :requireContentNum = postsStateLength
+    >
+  </ContentList>
 </template>
+<script setup lang="ts">
+import useContentListStore from "@/stores/useContentListStore";
 
-  <script setup lang="ts">
-    import useContentListStore from "@/stores/useContentListStore";
-    const contentListStore = useContentListStore();
-  </script>
-  
-  <style lang="scss" scoped>
-  </style>
+const contentListStore = useContentListStore();
+const { filmsState } = storeToRefs(contentListStore);
+const postsStateLength = ref(filmsState.value.length);
+</script>
+<style lang="scss" scoped>
+// .post {
+//   display: flex;
+//   gap: 8px;
+//   align-items: center;
+//   cursor: pointer;
+//   &:hover {
+//     opacity: 0.8;
+//   }
+// }
+</style>

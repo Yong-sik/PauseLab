@@ -1,4 +1,5 @@
 import useCompanyInformationStore from "../stores/useCompanyInformationStore";
+import useScrollLocationStore from "../stores/useScrollLocationStore";
 import { storeToRefs } from "pinia";
 
 export const useUtilFunction = () => {
@@ -24,8 +25,22 @@ export const useUtilFunction = () => {
                 break;
         }
     }
+
+    function setScrollLocation( currentYLocation:number ){
+        const scrollLocation = useScrollLocationStore();
+        const { scrollYLocation } = storeToRefs(scrollLocation);
+        scrollYLocation.value = currentYLocation;
+    }
+
+    function getScrollLocation(){
+        const scrollLocation = useScrollLocationStore();
+        const { scrollYLocation } = storeToRefs(scrollLocation);
+        return scrollYLocation.value;
+    }
   
     return {
+        setScrollLocation,
+        getScrollLocation,
         connectLink,
         companyInformation,
         companyInformationStore

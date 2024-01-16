@@ -9,8 +9,8 @@
                 </v-card> -->
             <!-- </template> -->
 
-            <template v-for="(content, index) in contentLists.slice(0,8)">
-                <v-col v-if="index<contentLists.slice(0,7).length" class="header-col d-flex child-flex" cols="6" md="3" align="center" >
+            <template v-for="(content, index) in contentLists.slice(0, requireContentNum)">
+                <v-col v-if="index<contentLists.slice(0, requireContentNum).length" class="header-col d-flex child-flex" cols="6" md="3" align="center" >
                     
                     <v-card 
                         @click="$router.push(`/${props.contentCategory}/${index}`)"
@@ -21,31 +21,30 @@
                         <ClientOnly>
                             <v-lazy
                                 :min-height="50"
-                                :options="{'threshold': (0.1 * index)}"
+                                
                                 aspect-ratio="1"
                                 
                             >
                                 <v-img 
                                     :style="itemStyle(index)" 
-                                    eager
                                     :id="props.contentCategory + '-img' + index"
                                     aspect-ratio="1"
                                     cover
                                     :src="content.imgUri"
-                                    >
+                                >
                                 
-                                <template v-slot:placeholder>
-                                    <v-row
-                                        class="fill-height ma-0 bg-background"
-                                        align="center"
-                                        justify="center"
-                                    >
-                                        <v-progress-circular
-                                        indeterminate
-                                        color="white"
-                                        ></v-progress-circular>
-                                    </v-row>
-                                </template>
+                                    <template v-slot:placeholder>
+                                        <v-row
+                                            class="fill-height ma-0 bg-background"
+                                            align="center"
+                                            justify="center"
+                                        >
+                                            <v-progress-circular
+                                            indeterminate
+                                            color="white"
+                                            ></v-progress-circular>
+                                        </v-row>
+                                    </template>
                                 </v-img>
                         </v-lazy>
                     </ClientOnly>
@@ -68,33 +67,83 @@
                 </v-col>
                 
                 
-                <v-col v-else  class="header-col " cols="6" md="3" justify="center" align="center" >
-                    <v-card 
+                
+            </template>
+            <v-col v-if="contentLists.slice(0, requireContentNum).length<8" class="header-col " cols="6" md="3" justify="center" align="center" >
+                    <v-card                 
+                        v-if="props.isRequireMore"
                         style=" justify-content: center; display: flex; align-items: center;"
                         height="100%"
                         id="more-col"
                         @click="$router.push(`/${props.contentCategory}`)"
+                    >    
+                        <v-img     
+                            :style="itemStyle(contentLists.slice(0, requireContentNum).length)" 
+                            :id="props.contentCategory + '-img' + contentLists.slice(0, requireContentNum).length"
+                            aspect-ratio="1"
+                            cover
+                        >   
+                            <div  style="width:100%; height: 100%; display: flex;">
+                                <div style="display: block; margin: auto;">
+                                    <v-icon size="30" style=" border: solid 2px #DEDDDA; border-radius: 30%;" color="#DEDDDA">mdi-chevron-right</v-icon>
+                                    <div class="mt-1" style="color: #DEDDDA; font-size: 0.7rem; font-weight: 900;" >더 보기</div>
+                                </div>
+                                
+                            </div>
+                        </v-img>
+                        
+                    </v-card>
+
+                    <!-- <v-card 
+                        v-else
+                        @click="$router.push(`/${props.contentCategory}/${index}`)"
+                        id="mouse-over-label"
+                        class="content"
+                        aspect-ratio="1"
                     >
                         <v-lazy
-                                :min-height="50"
-                                :options="{'threshold': (0.1 * index)}"
+                            :min-height="50"
+                            aspect-ratio="1"
+                        >
+                            <v-img 
+                                :style="itemStyle(index)" 
+                                eager
+                                :id="props.contentCategory + '-img' + index"
                                 aspect-ratio="1"
-                                
+                                cover
+                                :src="content.imgUri"
                             >
-                        
-                        
-                            <div :style="itemStyle(index)" style="width:100%; height: 100%; display: block;">
-                                <div class="more-icon-wrap mt-2 ">
-                                    <v-icon size="30" class="more-icon" style=" border: solid 2px #DEDDDA; border-radius: 30%;" color="#DEDDDA">mdi-chevron-right</v-icon>
-                                </div>
-                                <div class="mt-1" style="color: #DEDDDA; font-size: 0.7rem; font-weight: 900;" >더 보기</div>
-                            </div>
-                        
+                                <template v-slot:placeholder>
+                                    <v-row
+                                        class="fill-height ma-0 bg-background"
+                                        align="center"
+                                        justify="center"
+                                    >
+                                        <v-progress-circular
+                                        indeterminate
+                                        color="white"
+                                        ></v-progress-circular>
+                                    </v-row>
+                                </template>
+                            </v-img>
                         </v-lazy>
-                    </v-card>
+                    
+                        <v-card-title 
+                            :id="props.contentCategory + '-title'+index"
+                            class = "justify-center text-white d-flex flex-column"
+                        >
+                            <p class="font-weight-bold">
+                                {{ content.title }}
+                            </p>
+
+                            <div>
+                                <p class="">
+                                    {{ content.contents }}
+                                </p>
+                            </div>
+                        </v-card-title>
+                    </v-card> -->
                 </v-col>
-            </template>
-            
         </v-row>
     </v-app>
 </template>
@@ -114,7 +163,7 @@ const contentListStore = useContentListStore();
 
 let contentLists = ref([] as Content[]);
 // const { getIdList } = contentListStore;
-const props = defineProps(['contentCategory', 'posts']);
+const props = defineProps(['contentCategory', 'posts', 'isRequireMore', 'requireContentNum']);
 // console.log(props.posts.posts[0]);
 if(props.contentCategory === 'film'){
     const { filmsState } = storeToRefs(contentListStore);
@@ -125,6 +174,13 @@ else if(props.contentCategory === 'post'){
     contentLists = postsState;
     console.log(contentLists);
     // console.log(getIdList(7))
+}
+let requireContentNum = ref(0);
+if( contentLists.value.length < props.requireContentNum){
+    requireContentNum.value = contentLists.value.length;
+}
+else{
+    requireContentNum.value = props.requireContentNum;
 }
 let defaultTransition = 1.0;
 const transitionSpacing = 0.3;
@@ -257,7 +313,7 @@ function hoverMore(visible : boolean, index : number){
 
 .more-icon-wrap {
   position: relative;
-  width: 100%;
+  width: 20px;
   padding-bottom: 100%;
 }
 
