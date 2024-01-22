@@ -10,6 +10,10 @@
   const contentListStore = useContentListStore();
   await contentListStore.fetchContents('films');
   await contentListStore.fetchContents('posts');
+  await contentListStore.getFilmTypes();
+  await contentListStore.getPostTypes();
+  
+  contentListStore.initState();
 
   const companyInformationStore = useCompanyInformationStore();
   await companyInformationStore.fetchInformation();

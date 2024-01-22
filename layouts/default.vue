@@ -55,13 +55,13 @@
 
             
             <v-row>
-              <v-col class="header-col" cols="12" md="6" align="center" @click="routePage('FILM')">
+              <v-col class="header-col" cols="12" md="6" align="center" @click="routePage('/FILM')">
                 <v-sheet class = "font-weight-black text-guide_font">
                   FILM
                 </v-sheet>
               </v-col>
 
-              <v-col class="header-col" cols="12" md="6" align="center" @click="routePage('POST')">
+              <v-col class="header-col" cols="12" md="6" align="center" @click="routePage('/POST')">
                 <v-sheet class = "font-weight-black text-guide_font">
                   POST
                 </v-sheet>
@@ -69,7 +69,7 @@
             </v-row>
             
             <v-row>
-              <v-col class="header-col" cols="12" md="6" align="center" @click="routePage('ABOUT')">
+              <v-col class="header-col" cols="12" md="6" align="center" @click="routePage('/ABOUT')">
                 <v-sheet 
                   class = "font-weight-black text-guide_font"
                 >
@@ -77,7 +77,7 @@
                 </v-sheet>
               </v-col>
 
-              <v-col class="header-col" cols="12" md="6" align="center" @click="routePage('CONTACT')">
+              <v-col class="header-col" cols="12" md="6" align="center" @click="routePage('/CONTACT')">
                 <v-sheet class = "font-weight-black text-guide_font">
                   CONTACT
                 </v-sheet>
@@ -165,6 +165,9 @@
       if(pageName === '/'){
         pageName = "Pause Lab";
         console.log('pageName: ', pageName);
+      }
+      else{
+        pageName = pageName.substring(1);
       }
       headerTitle.innerHTML = pageName;
     }
@@ -262,7 +265,7 @@
   @import "../assets/stylesheets/layouts/default.scss";
   .v-toolbar-title{
     margin-inline-start: 0px;
-    font-size: 1.4dvw;
+    font-size: 1.4rem;
     text-align: center;
     // flex : 0;
   }
@@ -335,7 +338,7 @@
   @media screen and (max-width: 600px) {
     .v-toolbar-title{
       width: 600px;
-      font-size: 2.5dvw;
+      font-size: 1rem;
       text-align: center;
     }
 
@@ -388,8 +391,24 @@
     transition: all .3s ease-out;
   }
   @media screen and (max-width: 430px) {
+
+    .v-toolbar-title{
+      font-size: 0.5rem;
+    }
+
     .tooltip .tooltip-left {
       display: none;
     }
   }
+
+  @media screen and (max-width: 280px) {
+
+.v-toolbar-title{
+  display: none;
+}
+
+.tooltip .tooltip-left {
+  display: none;
+}
+}
 </style>

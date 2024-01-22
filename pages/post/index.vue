@@ -8,12 +8,18 @@
       </div>
     </template>
   </div> -->
-  <ContentList
+  <v-app>
+    <ContentType
+      :contentCategory="'post'"
+    >
+    </ContentType>
+    <ContentList
       :contentCategory="`post`"
       :isRequireMore="false"
       :requireContentNum = postsStateLength
     >
   </ContentList>
+  </v-app>
 </template>
 <script setup lang="ts">
 import useContentListStore from "@/stores/useContentListStore";
@@ -21,6 +27,20 @@ import useContentListStore from "@/stores/useContentListStore";
 const contentListStore = useContentListStore();
 const { postsState } = storeToRefs(contentListStore);
 const postsStateLength = ref(postsState.value.length);
+
+const { setScrollLocation, getScrollLocation } = useUtilFunction();
+
+onBeforeUnmount(() => {
+  const currentYLocation = document.documentElement.scrollTop;
+  // console.log(currentYLocation);
+  setScrollLocation(currentYLocation);  // 현재 Y스크롤의 위치를 Store에 저장.
+})
+
+onMounted(() => {
+  // console.log(getScrollLocation());
+  setTimeout(() => window.scrollTo(0, getScrollLocation()), 300);
+})
+
 </script>
 <style lang="scss" scoped>
 // .post {

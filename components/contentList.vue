@@ -8,15 +8,20 @@
                     <div style="width:100px; height: 100px; color: black;">{{ item.title }}</div>
                 </v-card> -->
             <!-- </template> -->
-
+            {{ contentLists }}
             <template v-for="(content, index) in contentLists.slice(0, requireContentNum)">
-                <v-col v-if="index<contentLists.slice(0, requireContentNum).length" class="header-col d-flex child-flex" cols="6" md="3" align="center" >
+                <v-col 
+                    v-if="content.isVisible" 
+                    class="header-col d-flex child-flex" cols="6" md="3" align="center" 
+                    :id="props.contentCategory + '-imgWrap' + index"
+                    >
                     
                     <v-card 
                         @click="$router.push(`/${props.contentCategory}/${index}`)"
-                        id="mouse-over-label"
+                        
                         class="content"
                         aspect-ratio="1"
+                        
                     >
                         <ClientOnly>
                             <v-lazy
@@ -164,15 +169,18 @@ const contentListStore = useContentListStore();
 let contentLists = ref([] as Content[]);
 // const { getIdList } = contentListStore;
 const props = defineProps(['contentCategory', 'posts', 'isRequireMore', 'requireContentNum']);
+
 // console.log(props.posts.posts[0]);
 if(props.contentCategory === 'film'){
     const { filmsState } = storeToRefs(contentListStore);
     contentLists = filmsState;
+    console.log(contentLists);
 }
 else if(props.contentCategory === 'post'){
     const { postsState } = storeToRefs(contentListStore);
     contentLists = postsState;
     console.log(contentLists);
+    // console.log(contentLists);
     // console.log(getIdList(7))
 }
 let requireContentNum = ref(0);
@@ -182,12 +190,16 @@ if( contentLists.value.length < props.requireContentNum){
 else{
     requireContentNum.value = props.requireContentNum;
 }
+
 let defaultTransition = 1.0;
-const transitionSpacing = 0.3;
+const transitionSpacing = 0.2;
 
 function itemStyle(index :number){
+    if(defaultTransition===2.6){
+        defaultTransition = 1.0;
+    }
     defaultTransition += transitionSpacing;
-    console.log(defaultTransition);
+    // console.log(defaultTransition);
     return { 
         // animationDelay: defaultTransition +`s` ,
         animation: 'bubble ' + defaultTransition + 's ease',
@@ -208,9 +220,6 @@ function itemStyle(index :number){
 //     }
 // })
 
-const {filmsState} = contentListStore;
-console.log(filmsState)
-console.log(filmsState.length);
 // let defaultTransition = 0.5;
 // const transitionSpacing = 0.2;
 

@@ -32,7 +32,7 @@ export const useUtilFunction = () => {
         scrollYLocation.value = currentYLocation;
     }
 
-    function getScrollLocation(){
+    function getScrollLocation():number{
         const scrollLocation = useScrollLocationStore();
         const { scrollYLocation } = storeToRefs(scrollLocation);
         return scrollYLocation.value;

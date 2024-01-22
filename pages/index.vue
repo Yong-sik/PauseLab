@@ -33,12 +33,12 @@
   
   onBeforeUnmount(() => {
     const currentYLocation = document.documentElement.scrollTop;
-    console.log(currentYLocation);
+    // console.log(currentYLocation);
     setScrollLocation(currentYLocation);  // 현재 Y스크롤의 위치를 Store에 저장.
   })
 
   onMounted(() => {
-    window.scrollTo(0, getScrollLocation());
+    setTimeout(() => window.scrollTo(0, getScrollLocation()), 300);
   })
 </script>
 <style lang="scss" scoped>

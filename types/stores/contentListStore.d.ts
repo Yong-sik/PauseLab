@@ -4,4 +4,5 @@ export interface Content {
     title: string;
     contents: string;
     type: string;
+    isVisible: boolean;
   }
